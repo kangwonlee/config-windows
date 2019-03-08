@@ -2,9 +2,11 @@ import json
 import os
 
 
-def revise_bashrc():
+def get_bashrc_filename():
+    return os.path.expanduser(os.path.join('~', '.bashrc'))
 
-    bash_filename = "~/.bashrc"
+
+def revise_bashrc(bash_filename=get_bashrc_filename()):
 
     with open(bash_filename, 'r') as bashrc:
         txt = bashrc.read()
