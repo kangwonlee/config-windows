@@ -15,9 +15,10 @@ def get_conda_sh_filename():
     return os.path.expanduser(os.path.join('~', 'Anaconda3', 'etc', 'profile.d', 'conda.sh'))
 
 
-def revise_bashrc(bash_filename=get_bashrc_filename()):
+def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_conda_sh_filename()):
 
     does_file_exist(bash_filename)
+    does_file_exist(conda_sh_filename)
 
     with open(bash_filename, 'r') as bashrc:
         txt = bashrc.read()
