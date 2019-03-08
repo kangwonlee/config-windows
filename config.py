@@ -8,6 +8,9 @@ def get_bashrc_filename():
 
 def revise_bashrc(bash_filename=get_bashrc_filename()):
 
+    if not os.path.exists(bash_filename):
+        raise FileNotFoundError(f'{bash_filename} not found')
+
     with open(bash_filename, 'r') as bashrc:
         txt = bashrc.read()
 
