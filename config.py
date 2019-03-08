@@ -13,8 +13,7 @@ def does_file_exist(filename):
 
 def revise_bashrc(bash_filename=get_bashrc_filename()):
 
-    if not os.path.exists(bash_filename):
-        raise FileNotFoundError(f'{bash_filename} not found')
+    does_file_exist(bash_filename)
 
     with open(bash_filename, 'r') as bashrc:
         txt = bashrc.read()
