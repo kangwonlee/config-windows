@@ -6,6 +6,11 @@ def get_bashrc_filename():
     return os.path.expanduser(os.path.join('~', '.bashrc'))
 
 
+def does_file_exist(filename):
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f'{filename} not found')
+
+
 def revise_bashrc(bash_filename=get_bashrc_filename()):
 
     if not os.path.exists(bash_filename):
