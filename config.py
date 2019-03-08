@@ -29,6 +29,8 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
         with open(bash_filename, 'w') as bashrc:
             bashrc.write(txt)
 
+    # TODO : how to revise path?
+
 
 def get_settings_json_filename():
     return os.path.expandvars(os.path.join('$APPDATA', 'Code', 'User', 'settings.json'))
