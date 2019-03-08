@@ -27,3 +27,11 @@ def revise_settings_json(json_filename=get_settings_json_filename()):
         settings = json.load(json_file)
 
     print(settings)
+
+
+def main():
+    revise_settings_json()
+
+
+if "__main__" == __name__:
+    main()
