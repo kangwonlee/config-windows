@@ -11,6 +11,10 @@ def does_file_exist(filename):
         raise FileNotFoundError(f'{filename} not found')
 
 
+def get_conda_sh_filename():
+    return os.path.expanduser(os.path.join('~', 'Anaconda3', 'etc', 'profile.d', 'conda.sh'))
+
+
 def revise_bashrc(bash_filename=get_bashrc_filename()):
 
     does_file_exist(bash_filename)
