@@ -45,6 +45,9 @@ def revise_settings_json(json_filename=get_settings_json_filename()):
 
 def main():
     revise_settings_json()
+    does_file_exist(get_bashrc_filename())
+    does_file_exist(get_conda_sh_filename())
+    does_file_exist(get_settings_json_filename())
 
 
 if "__main__" == __name__:
