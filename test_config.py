@@ -100,3 +100,9 @@ def test_is_anaconda_in_bash_env_path_not():
     result = config.is_anaconda_in_bash_env_path(path_with_anaconda)
 
     assert not result, path_with_anaconda
+
+
+def test_which_python():
+    result = config.which_python()
+
+    assert result
