@@ -115,4 +115,16 @@ def test_get_python_path():
     assert os.path.isdir(result), f"{result} is not a folder?"
     assert 'python.exe' in os.listdir(result), f"{result} is not a folder?"
     assert os.path.exists(os.path.join(str(result), 'python.exe'))
-    
+
+
+def test_can_bash_find_python_yes():
+    import sys
+    input_string = sys.executable
+    result = config.can_bash_find_python(input_string)
+    assert result, input_string
+
+
+def test_can_bash_find_python_no():
+    input_string = ''
+    result = config.can_bash_find_python(input_string)
+    assert not result, input_string
