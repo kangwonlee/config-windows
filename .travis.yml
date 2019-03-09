@@ -5,7 +5,15 @@ os : windows
 install :
   # install anaconda
   - choco install anaconda3 --params '"/JustMe /D:c:\MyTools"'
+  # install vscode
   - choco install vscode
+  # install python extension for vscode
   - code --install-extension ms-python.python
   - code --extensions-dir
-  
+
+script :
+  - python -m nose
+
+notifications : 
+  email :
+    - kangwon.lee.edu@gmail.com
