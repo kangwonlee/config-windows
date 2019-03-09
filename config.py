@@ -20,14 +20,20 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
     does_file_exist(bash_filename)
     does_file_exist(conda_sh_filename)
 
-    with open(bash_filename, 'r') as bashrc:
-        txt = bashrc.read()
+    txt = read_file(bash_filename)
 
     if "Anaconda3/etc/profile.d/conda.sh" not in txt:
         txt += '\n. ~/Anaconda3/etc/profile.d/conda.sh\n'
 
         with open(bash_filename, 'w') as bashrc:
             bashrc.write(txt)
+
+
+def read_file(filename):
+    txt = ''
+    with open(filename, 'r') as fp:
+        txt = fp.read()
+    return txt
 
     # TODO : how to revise path?
 
