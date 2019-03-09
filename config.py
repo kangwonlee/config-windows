@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import subprocess
 
 
 def get_bashrc_filename():
@@ -9,6 +10,7 @@ def get_bashrc_filename():
 
 def does_file_exist(filename):
     if not os.path.exists(filename):
+
         raise FileNotFoundError(f'{filename} not found')
 
 
@@ -42,6 +44,10 @@ def get_bash_path():
     git_exe_path = which_git()
     git_path_list = git_exe_path.split(os.sep)
     return os.sep.join(git_path_list[:-2] + ['bin', 'bash.exe'])
+
+
+def get_bash_env_path():
+    return subprocess.check_output([get_bash_path(), '-c', 'echo $PATH'])
 
 
 def activate_conda(txt):
