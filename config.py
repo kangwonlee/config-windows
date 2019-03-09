@@ -40,6 +40,10 @@ def which_git():
     return shutil.which('git')
 
 
+def which_python():
+    return shutil.which('python')
+
+
 def get_bash_path():
     git_exe_path = which_git()
     git_path_list = git_exe_path.split(os.sep)
