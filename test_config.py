@@ -36,3 +36,15 @@ def test_activate_conda_add():
 
     assert result[0]
     assert 'Anaconda3/etc/profile.d/conda.sh' in result[1]
+
+
+def test_activate_conda_intact():
+    txt = (
+        '. /c/Users/travis/Anaconda3/etc/profile.d/conda.sh\n'
+        'alias log="git log --oneline --graph --color --decorate"\n'
+    )
+
+    result = config.activate_conda(txt)
+
+    assert not result[0]
+    assert txt == result[1]
