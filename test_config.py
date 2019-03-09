@@ -55,3 +55,8 @@ def test_activate_conda_intact():
 def test_which_git():
     result = shutil.which('git')
     assert result, result
+
+
+def test_which_bash():
+    result = shutil.which('git-bash')
+    assert result, result
