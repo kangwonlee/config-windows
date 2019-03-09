@@ -113,3 +113,6 @@ ENV/
 
 # .svg vector drawing files
 *.svg
+
+# nose test
+.noseids
