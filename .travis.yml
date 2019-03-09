@@ -12,6 +12,15 @@ install :
   - echo $PATH
   # expected location of the vscode
   - VSCODE_PATH=/c/Program\ Files/Microsoft\ VS\ Code/bin
+  # decide command for VS Code
+  - if [[ -f $VSCODE_PATH/code ]]; then
+      VSCODE=code;
+    elif [[ -f $VSCODE_PATH/vscode ]]; then
+      VSCODE=vscode;
+    else
+      echo "Both code and vscode not in $VSCODE_PATH"
+      VSCODE=vscode;
+    fi
   # install python extension for vscode
   - code --install-extension ms-python.python
   - code --extensions-dir
