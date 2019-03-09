@@ -5,7 +5,6 @@ os : windows
 install :
   # install anaconda
   - travis_wait choco install anaconda3 --params '"/JustMe /D:c:\Users\travis"'
-  - which conda
   # install vscode
   - choco install vscode
   # check PATH environment variable
@@ -18,7 +17,7 @@ install :
     elif [[ -f $VSCODE_PATH/vscode ]]; then
       VSCODE=vscode;
     else
-      echo "Both code and vscode not in $VSCODE_PATH"
+      echo "Both code and vscode not in $VSCODE_PATH";
       VSCODE=vscode;
     fi
   # install python extension for vscode
