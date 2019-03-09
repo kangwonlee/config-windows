@@ -22,19 +22,22 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
 
     txt = read_file(bash_filename)
 
-    b_revised = False
-
     # add path
 
     # activate conda
+    b_conda, txt = activate_conda(txt)
+
+    # write to file if revised
+    if b_conda:
+        with open(bash_filename, 'w') as bashrc:
+            bashrc.write(txt)
+
+
+def activate_conda(txt):
     if "Anaconda3/etc/profile.d/conda.sh" not in txt:
         txt += '\n. ~/Anaconda3/etc/profile.d/conda.sh\n'
         b_revised = True
-
-    # write to file if revised
-    if b_revised:
-        with open(bash_filename, 'w') as bashrc:
-            bashrc.write(txt)
+    return b_revised, txt
 
 
 def read_file(filename):
