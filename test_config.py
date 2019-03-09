@@ -1,5 +1,6 @@
 import config
 import os
+import shutil
 
 
 def test_does_this_file_exist():
@@ -9,6 +10,7 @@ def test_does_this_file_exist():
 
 def test_get_conda_sh_filename():
     result = config.get_conda_sh_filename()
+
     assert isinstance(result, str)
 
     result_list = result.split(os.sep)
@@ -48,3 +50,8 @@ def test_activate_conda_intact():
 
     assert not result[0]
     assert txt == result[1]
+
+
+def test_which_git():
+    result = shutil.which('git')
+    assert result, result
