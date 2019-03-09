@@ -61,3 +61,9 @@ def test_bash_path():
     assert bash_path
 
     assert os.path.exists(bash_path), f"{bash_path} not found"
+
+
+def test_get_bash_env_path():
+    result = config.get_bash_env_path()
+
+    assert isinstance(result, (str, bytes)), type(result)
