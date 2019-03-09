@@ -14,8 +14,10 @@ install :
   # decide command for VS Code
   - if [[ -f $VSCODE_PATH/code ]]; then
       VSCODE=code;
+      echo "$VSCODE_PATH/$VSCODE exists";
     elif [[ -f $VSCODE_PATH/vscode ]]; then
       VSCODE=vscode;
+      echo "$VSCODE_PATH/$VSCODE exists";
     else
       echo "Both code and vscode not in $VSCODE_PATH";
       VSCODE=vscode;
