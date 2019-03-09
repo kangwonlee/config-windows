@@ -16,3 +16,12 @@ def test_get_conda_sh_filename():
     assert 'Anaconda3' in result_list
     assert 'etc' in result_list
     assert 'profile.d' in result_list
+
+
+def test_get_settings_json_filename():
+    result = config.get_settings_json_filename()
+    assert isinstance(result, str)
+
+    result_list = result.split(os.sep)
+    assert 'settings.json' == result_list[-1]
+    assert 'Code' in result_list
