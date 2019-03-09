@@ -59,7 +59,7 @@ def is_anaconda_in_bash_env_path(bash_env_path=get_bash_env_path()):
     return any(map(lambda x : '/Anaconda3' in x, env_path_list))
 
 
-def get_python_path():
+def get_python_folder():
     python_exe_path = which_python()
     python_path_str = os.path.split(python_exe_path)[0]
     return python_path_str

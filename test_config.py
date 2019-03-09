@@ -109,7 +109,7 @@ def test_which_python():
 
 
 def test_get_python_path():
-    result = config.get_python_path()
+    result = config.get_python_folder()
 
     assert os.path.exists(result), f"{result} does not exist?"
     assert os.path.isdir(result), f"{result} is not a folder?"
