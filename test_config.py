@@ -67,3 +67,21 @@ def test_get_bash_env_path():
     result = config.get_bash_env_path()
 
     assert isinstance(result, (str, bytes)), type(result)
+
+
+def test_is_anaconda_in_bash_env_path():
+    path_with_anaconda = (
+        '/c/Users/travis/Anaconda3:'
+        '/c/Users/travis/Anaconda3/Scripts:'
+        '/c/Users/travis/Anaconda3/bin:'
+        '/mingw64/bin:'
+        '/usr/bin:'
+        '/c/WINDOWS/system32:'
+        '/c/WINDOWS:'
+        '/cmd:'
+        '/c/Users/travis/AppData/Local/Programs/Microsoft VS Code/bin'
+    )
+
+    result = config.is_anaconda_in_bash_env_path(path_with_anaconda)
+
+    assert result, path_with_anaconda
