@@ -34,6 +34,10 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
             bashrc.write(txt)
 
 
+def which_git():
+    return shutil.which('git')
+
+
 def activate_conda(txt):
     b_revised = False
     if "Anaconda3/etc/profile.d/conda.sh" not in txt:
