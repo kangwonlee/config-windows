@@ -65,6 +65,10 @@ def get_python_folder():
     return python_path_str
 
 
+def can_bash_find_python(python_exe_path=which_python()):
+    return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
+
+
 def activate_conda(txt):
     b_revised = False
     if "Anaconda3/etc/profile.d/conda.sh" not in txt:
