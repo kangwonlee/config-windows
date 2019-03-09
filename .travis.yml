@@ -8,6 +8,8 @@ install :
   - which conda
   # install vscode
   - choco install vscode
+  # check PATH environment variable
+  - echo $PATH
   # install python extension for vscode
   - code --install-extension ms-python.python
   - code --extensions-dir
