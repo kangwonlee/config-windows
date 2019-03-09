@@ -106,3 +106,13 @@ def test_which_python():
     result = config.which_python()
 
     assert result
+
+
+def test_get_python_path():
+    result = config.get_python_path()
+
+    assert os.path.exists(result), f"{result} does not exist?"
+    assert os.path.isdir(result), f"{result} is not a folder?"
+    assert 'python.exe' in os.listdir(result), f"{result} is not a folder?"
+    assert os.path.exists(os.path.join(str(result), 'python.exe'))
+    
