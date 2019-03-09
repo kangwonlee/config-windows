@@ -22,8 +22,8 @@ install :
       VSCODE=vscode;
     fi
   # install python extension for vscode
-  - code --install-extension ms-python.python
-  - code --extensions-dir
+  - $VSCODE_PATH/$VSCODE --install-extension ms-python.python
+  - $VSCODE_PATH/$VSCODE --extensions-dir
 
 script :
   - python -m nose
