@@ -50,6 +50,11 @@ def get_bash_env_path():
     return subprocess.check_output([get_bash_path(), '-c', 'echo $PATH'])
 
 
+def is_anaconda_in_bash_env_path(bash_env_path=get_bash_env_path()):
+    env_path_list = bash_env_path.split(':')
+    return any(map(lambda x : '/Anaconda3' in x, env_path_list))
+
+
 def activate_conda(txt):
     b_revised = False
     if "Anaconda3/etc/profile.d/conda.sh" not in txt:
