@@ -25,3 +25,14 @@ def test_get_settings_json_filename():
     result_list = result.split(os.sep)
     assert 'settings.json' == result_list[-1]
     assert 'Code' in result_list
+
+
+def test_activate_conda_add():
+    txt = (
+        'alias log="git log --oneline --graph --color --decorate"\n'
+    )
+
+    result = config.activate_conda(txt)
+
+    assert result[0]
+    assert 'Anaconda3/etc/profile.d/conda.sh' in result[1]
