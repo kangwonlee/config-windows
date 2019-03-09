@@ -54,3 +54,10 @@ def test_activate_conda_intact():
 
 def test_which_git():
     assert config.which_git()
+
+
+def test_bash_path():
+    bash_path = config.get_bash_path()
+    assert bash_path
+
+    assert os.path.exists(bash_path), f"{bash_path} not found"
