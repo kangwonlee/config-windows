@@ -37,6 +37,10 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
             bashrc.write(txt)
 
 
+def add_python_path(bashrc_txt):
+    pass
+
+
 def which_git():
     return shutil.which('git')
 
