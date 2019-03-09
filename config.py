@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 
 
 def get_bashrc_filename():
