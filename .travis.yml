@@ -11,7 +11,7 @@ install :
   # check PATH environment variable
   - echo $PATH
   # expected location of the vscode
-  - VSCODE_PATH="/c/Program\\ Files/Microsoft\\ VS\\ Code/bin"
+  - VSCODE_PATH="/c/Progra~1/Microsoft\\ VS\\ Code/bin"
   # decide command for VS Code
   - if [[ -f $VSCODE_PATH/code ]]; then
       VSCODE=code;
