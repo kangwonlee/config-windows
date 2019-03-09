@@ -1,0 +1,8 @@
+language : generic
+
+os : windows
+
+install :
+  # install anaconda
+  - choco install anaconda3 --params '"/JustMe /D:c:\MyTools"'
+  
