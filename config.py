@@ -38,6 +38,12 @@ def which_git():
     return shutil.which('git')
 
 
+def get_bash_path():
+    git_exe_path = which_git()
+    git_path_list = git_exe_path.split(os.sep)
+    return os.sep.join(git_path_list[:-2] + ['bin', 'bash.exe'])
+
+
 def activate_conda(txt):
     b_revised = False
     if "Anaconda3/etc/profile.d/conda.sh" not in txt:
