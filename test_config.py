@@ -85,3 +85,18 @@ def test_is_anaconda_in_bash_env_path():
     result = config.is_anaconda_in_bash_env_path(path_with_anaconda)
 
     assert result, path_with_anaconda
+
+
+def test_is_anaconda_in_bash_env_path_not():
+    path_with_anaconda = (
+        '/mingw64/bin:'
+        '/usr/bin:'
+        '/c/WINDOWS/system32:'
+        '/c/WINDOWS:'
+        '/cmd:'
+        '/c/Users/travis/AppData/Local/Programs/Microsoft VS Code/bin'
+    )
+
+    result = config.is_anaconda_in_bash_env_path(path_with_anaconda)
+
+    assert not result, path_with_anaconda
