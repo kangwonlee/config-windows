@@ -7,6 +7,7 @@ install :
   - travis_wait choco install anaconda3 --params '"/JustMe /D:c:\Users\travis"'
   # install vscode
   - choco install vscode
+  - . ~/.bashrc
   # check PATH environment variable
   - echo $PATH
   # expected location of the vscode
