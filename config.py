@@ -26,6 +26,7 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
     txt = read_file(bash_filename)
 
     # add path
+    # TODO : how to revise path?
 
     # activate conda
     b_conda, txt = activate_conda(txt)
@@ -82,8 +83,6 @@ def read_file(filename):
     with open(filename, 'r') as fp:
         txt = fp.read()
     return txt
-
-    # TODO : how to revise path?
 
 
 def get_settings_json_filename():
