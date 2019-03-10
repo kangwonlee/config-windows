@@ -178,7 +178,8 @@ def revise_settings_json(json_filename=get_settings_json_filename(), b_save=Fals
 
 
 def main():
-    revise_settings_json()
+    revise_bashrc()
+    revise_settings_json(b_save=True)
     does_file_exist(get_bashrc_filename())
     does_file_exist(get_conda_sh_filename())
     does_file_exist(get_settings_json_filename())
