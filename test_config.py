@@ -190,3 +190,11 @@ def test_get_unix_path_with_drive():
     expected = '/c/Users/beachgoer/.bashrc'
 
     assert expected == result, f"\nexpected : {expected}\nresult : {result}"
+
+
+def test_get_unix_path_without_drive():
+    input_win_path = 'Users\\beachgoer\\.bashrc'
+    result = config.get_unix_path(input_win_path)
+    expected = 'Users/beachgoer/.bashrc'
+
+    assert expected == result, f"\nexpected : {expected}\nresult : {result}"
