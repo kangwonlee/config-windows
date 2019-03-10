@@ -63,7 +63,9 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
     b_conda, txt = activate_conda(txt)
 
     # write to file if revised
+    print(f"b_path  = {b_path}\nb_conda = {b_conda}")
     if b_path or b_conda:
+        print(f"writing to {bash_filename}")
         with open(bash_filename, 'w') as bashrc:
             bashrc.write(txt)
 
