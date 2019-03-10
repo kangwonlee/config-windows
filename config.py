@@ -133,8 +133,11 @@ def revise_settings_json(json_filename=get_settings_json_filename(), b_save=Fals
 
     json_for_bash = {'terminal.integrated.shell.windows': get_bash_path()}
 
-    with open(json_filename, 'r') as json_file:
-        settings = json.load(json_file)
+    if os.path.exists(get_settings_json_filename()):
+        with open(json_filename, 'r') as json_file:
+            settings = json.load(json_file)
+    else:
+        settings = {}
 
     backup = dict(settings)
 
