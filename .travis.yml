@@ -5,26 +5,15 @@ services :
 
 os : windows
 
-install :
-  # install anaconda
-  - travis_wait 20 choco install anaconda3 --params '"/JustMe /D:c:\Users\travis"'
-  - CONDA_PATH=/c/Users/travis/Anaconda3
-  # install vscode
+before_install:
+  - docker pull continuumio/anaconda3
+  - docker run -it -v $(pwd):/config-windows continuumio/anaconda3 /bin/bash
+  - docker ps -a
+  - docker run continuumio/anaconda3 /bin/bash -c "cd /config-windows; nosetests"
+
+install:
   - choco install vscode
-  - . ~/.bashrc
-  # check PATH environment variable
-  - echo $PATH
-  # expected location of the vscode
-  - VSCODE_PATH="/c/Program Files/Microsoft VS Code/bin"
-  # add vscode path to PATH
-  - export PATH=$VSCODE_PATH:$PATH
-  - echo $PATH
   - which code
-  - which python
-  - hash -r
-  - which code
-  - which python
-  # install python extension for vscode
   - code --install-extension ms-python.python
   - code --list-extensions
 
