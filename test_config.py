@@ -113,7 +113,7 @@ def test_get_python_path():
 
     assert os.path.exists(result), f"{result} does not exist?"
     assert os.path.isdir(result), f"{result} is not a folder?"
-    assert 'python.exe' in os.listdir(result), f"{result} is not a folder?"
+    assert ('python' in os.listdir(result)) or ('python.exe' in os.listdir(result)), os.listdir(result)
     assert os.path.exists(os.path.join(str(result), 'python.exe'))
 
 
