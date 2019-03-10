@@ -80,7 +80,10 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
 
 def which_git():
-    return shutil.which('git')
+    result = shutil.which('git')
+    if result is None:
+        result = ''
+    return result
 
 
 def get_bash_path():
