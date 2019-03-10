@@ -15,6 +15,18 @@ def does_file_exist(filename):
         raise FileNotFoundError(f'{filename} not found')
 
 
+def get_unix_path(win_path):
+
+    if ':' in win_path:
+        drive, win_path_under_drive = win_path.split(':')
+        unix_path_under_drive = win_path_under_drive.replace('\\', '/')
+        unix_path = f"/{drive.lower()}{unix_path_under_drive}"
+    else:
+        unix_path = win_path.replace('\\', '/')
+
+    return unix_path
+        
+
 def has_folder_python(folder):
     return ('python' in os.listdir(folder)) or ('python.exe' in os.listdir(folder))
 
@@ -35,10 +47,13 @@ def get_conda_sh_filename():
 
 def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_conda_sh_filename()):
 
-    does_file_exist(bash_filename)
+    # does_file_exist(bash_filename)
     does_file_exist(conda_sh_filename)
 
-    txt = read_file(bash_filename)
+    if os.path.exists(bash_filename):
+        txt = read_file(bash_filename)
+    else:
+        txt = ''
 
     # add path
     # TODO : how to revise path?
@@ -48,7 +63,9 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
     b_conda, txt = activate_conda(txt)
 
     # write to file if revised
+    print(f"b_path  = {b_path}\nb_conda = {b_conda}")
     if b_path or b_conda:
+        print(f"writing to {bash_filename}")
         with open(bash_filename, 'w') as bashrc:
             bashrc.write(txt)
 
@@ -64,13 +81,13 @@ def can_bash_find_python(python_exe_path=which_python()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
 
-def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_python_folder_from_sys()):
+def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_unix_path(get_python_folder_from_sys())):
     b_path = False
     if not bash_can_find_python:
 
-        assert os.path.exists(python_folder), python_folder
-        assert os.path.isdir(python_folder), python_folder
-        assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
+        # assert os.path.exists(python_folder), python_folder
+        # assert os.path.isdir(python_folder), python_folder
+        # assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
 
         b_path = True
 
@@ -110,12 +127,6 @@ def is_anaconda_in_bash_env_path(bash_env_path=get_bash_env_path()):
     return any(map(lambda x : '/Anaconda3' in x, env_path_list))
 
 
-def get_python_folder():
-    python_exe_path = which_python()
-    python_path_str = os.path.split(python_exe_path)[0]
-    return python_path_str
-
-
 def activate_conda(txt):
     b_revised = False
     if "Anaconda3/etc/profile.d/conda.sh" not in txt:
@@ -126,8 +137,9 @@ def activate_conda(txt):
 
 def read_file(filename):
     txt = ''
-    with open(filename, 'r') as fp:
-        txt = fp.read()
+    if os.path.exists(filename):
+        with open(filename, 'r') as fp:
+            txt = fp.read()
     return txt
 
 
@@ -137,7 +149,10 @@ def get_settings_json_filename():
 
 def revise_settings_json(json_filename=get_settings_json_filename(), b_save=False):
 
-    json_for_bash = {'terminal.integrated.shell.windows': get_bash_path()}
+    json_for_bash = {
+        'python.pythonPath': 'C:\\Users\\cad\\Anaconda3\\python.exe',
+        'terminal.integrated.shell.windows': get_bash_path(),
+    }
 
     if os.path.exists(get_settings_json_filename()):
         with open(json_filename, 'r') as json_file:
@@ -156,7 +171,9 @@ def revise_settings_json(json_filename=get_settings_json_filename(), b_save=Fals
     assert os.path.exists(settings['terminal.integrated.shell.windows']), settings
     assert os.path.isfile(settings['terminal.integrated.shell.windows']), settings
 
+    print(f"b_save  = {b_save}\n")
     if b_save and (settings != backup):
+        print(f'writing to {json_filename}')
         with open(json_filename, 'w') as json_file:
             json.dump(settings, json_file)
 
@@ -164,7 +181,8 @@ def revise_settings_json(json_filename=get_settings_json_filename(), b_save=Fals
 
 
 def main():
-    revise_settings_json()
+    revise_bashrc()
+    revise_settings_json(b_save=True)
     does_file_exist(get_bashrc_filename())
     does_file_exist(get_conda_sh_filename())
     does_file_exist(get_settings_json_filename())

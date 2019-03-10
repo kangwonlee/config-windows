@@ -1,11 +1,11 @@
 import config
 import os
 import shutil
+import subprocess
 import sys
 
 
 def test_does_this_file_exist():
-    # Following should not raise an exception
     config.does_file_exist(__file__)
 
 
@@ -105,17 +105,7 @@ def test_is_anaconda_in_bash_env_path_not():
 
 def test_which_python():
     result = config.which_python()
-
-    assert result
-
-
-def test_get_python_path():
-    result = config.get_python_folder()
-
-    assert os.path.exists(result), f"{result} does not exist?"
-    assert os.path.isdir(result), f"{result} is not a folder?"
-    assert ('python' in os.listdir(result)) or ('python.exe' in os.listdir(result)), os.listdir(result)
-    assert os.path.exists(os.path.join(str(result), 'python.exe'))
+    assert isinstance(result, str)
 
 
 def test_can_bash_find_python_yes():
@@ -155,14 +145,20 @@ def test_add_python_folder_to_path_default():
         if line.startswith("export"):
             words = line.strip().split()
             if "export"==words[0] and words[1].startswith('PATH='):
-                path_list = words[1].split('=')[1].split(':')
+                # located PATH line
+                bash_path = str(subprocess.check_output([config.get_bash_path(), '-c', f"{words[1]};echo $PATH"]), 'utf-8')
+                unix_path_list = bash_path.split(':')
 
-                for folder in path_list:
-                    if config.has_folder_python(folder):
+                for folder in unix_path_list:
+                    if 'Anaconda3' in folder:
                         b_anaconda_in_path = True
                         break
 
-    assert (b_anaconda_in_path) or ((not b_update) and config.can_bash_find_python())
+    assert (b_anaconda_in_path) or ((not b_update) and config.can_bash_find_python()), ("\n"
+        f"b_anaconda_in_path = {b_anaconda_in_path}\n"
+        f"not b_update = {not b_update}\n"
+        f"config.can_bash_find_python() = {config.can_bash_find_python()}\n"
+        )
 
 
 def test_has_folder_python():
@@ -182,3 +178,19 @@ def test_has_folder_python_no():
 
 def test_revise_settings_json():
     config.revise_settings_json(b_save=False)
+
+
+def test_get_unix_path_with_drive():
+    input_win_path = 'C:\\Users\\beachgoer\\.bashrc'
+    result = config.get_unix_path(input_win_path)
+    expected = '/c/Users/beachgoer/.bashrc'
+
+    assert expected == result, f"\nexpected : {expected}\nresult : {result}"
+
+
+def test_get_unix_path_without_drive():
+    input_win_path = 'Users\\beachgoer\\.bashrc'
+    result = config.get_unix_path(input_win_path)
+    expected = 'Users/beachgoer/.bashrc'
+
+    assert expected == result, f"\nexpected : {expected}\nresult : {result}"
