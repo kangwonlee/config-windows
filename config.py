@@ -50,14 +50,14 @@ def get_python_folder_from_sys():
     return os.path.split(sys.executable)[0]
 
 
-def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_path=get_python_folder_from_sys()):
+def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_python_folder_from_sys()):
     if not bash_can_find_python:
 
-        assert os.path.exists(python_path), python_path
-        assert os.path.isdir(python_path), python_path
-        assert ('python' in os.listdir(python_path)) or ('python.exe' in os.listdir(python_path)), os.listdir(python_path)
+        assert os.path.exists(python_folder), python_folder
+        assert os.path.isdir(python_folder), python_folder
+        assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
 
-        bashrc_txt += f'\nexport PATH={python_path}:$PATH\n'
+        bashrc_txt += f'\nexport PATH={python_folder}:$PATH\n'
     
     return bashrc_txt
 
