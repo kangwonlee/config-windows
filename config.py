@@ -54,7 +54,10 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
 
 
 def which_python():
-    return shutil.which('python')
+    result = shutil.which('python')
+    if result is None:
+        result = ''
+    return result
 
 
 def can_bash_find_python(python_exe_path=which_python()):
