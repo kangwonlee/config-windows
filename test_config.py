@@ -136,6 +136,10 @@ def test_get_python_folder_from_sys():
     assert ('python' in os.listdir(python_path)) or ('python.exe' in os.listdir(python_path)), os.listdir(python_path)
 
 
+def has_folder_python(folder):
+    return ('python' in os.listdir(folder)) or ('python.exe' in os.listdir(folder)), os.listdir(folder)
+
+
 def test_add_python_folder_to_path():
     input_text = ''
     python_folder = os.path.split(sys.executable)[0]
