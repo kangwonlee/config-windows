@@ -37,8 +37,20 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
             bashrc.write(txt)
 
 
-def add_python_path(bashrc_txt):
-    pass
+def add_python_path(bashrc_txt, python_path=get_python_path()):
+    if not can_bash_find_python():
+
+        assert os.path.exists(python_path), python_path
+        assert os.path.isdir(python_path), python_path
+        assert 'python' in os.listdir(python_path), os.listdir(python_path)
+
+        bashrc_txt += f'\nexport PATH={python_path}:$PATH\n'
+    
+    return bashrc_txt
+
+
+def get_python_path():
+    return ''
 
 
 def which_git():
