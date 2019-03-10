@@ -51,15 +51,18 @@ def get_python_folder_from_sys():
 
 
 def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_python_folder_from_sys()):
+    b_path = False
     if not bash_can_find_python:
 
         assert os.path.exists(python_folder), python_folder
         assert os.path.isdir(python_folder), python_folder
         assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
 
+        b_path = True
+
         bashrc_txt += f'\nexport PATH={python_folder}:$PATH\n'
     
-    return bashrc_txt
+    return b_path, bashrc_txt
 
 
 def which_git():
