@@ -163,3 +163,7 @@ def test_add_python_folder_to_path_default():
                         break
 
     assert (b_anaconda_in_path) or ((not b_update) and config.can_bash_find_python())
+
+
+def test_has_folder_python():
+    assert config.has_folder_python(os.path.split(sys.executable)[0])
