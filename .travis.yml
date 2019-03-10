@@ -6,7 +6,7 @@ services :
 os : windows
 
 before_install:
-  - docker pull continuumio/anaconda3
+  - docker pull --platform=windows continuumio/anaconda3 
   - docker run -it -v $(pwd):/config-windows continuumio/anaconda3 /bin/bash
   - docker ps -a
   - docker run continuumio/anaconda3 /bin/bash -c "cd /config-windows; nosetests"
