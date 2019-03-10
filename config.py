@@ -15,6 +15,10 @@ def does_file_exist(filename):
         raise FileNotFoundError(f'{filename} not found')
 
 
+def get_python_folder_from_sys():
+    return os.path.split(sys.executable)[0]
+
+
 def get_conda_sh_filename():
     return os.path.expanduser(os.path.join('~', 'Anaconda3', 'etc', 'profile.d', 'conda.sh'))
 
@@ -45,10 +49,6 @@ def which_python():
 
 def can_bash_find_python(python_exe_path=which_python()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
-
-
-def get_python_folder_from_sys():
-    return os.path.split(sys.executable)[0]
 
 
 def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_python_folder_from_sys()):
