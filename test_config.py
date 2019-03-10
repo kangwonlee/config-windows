@@ -133,7 +133,7 @@ def test_can_bash_find_python_no():
 
 def test_get_python_folder_from_sys():
     python_path = config.get_python_folder_from_sys()
-    assert ('python' in os.listdir(python_path)) or ('python.exe' in os.listdir(python_path)), os.listdir(python_path)
+    assert has_folder_python(python_path)
 
 
 def has_folder_python(folder):
