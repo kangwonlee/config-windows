@@ -67,7 +67,7 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
         assert os.path.exists(python_folder), python_folder
         assert os.path.isdir(python_folder), python_folder
-        assert has_folder_python(python_folder)
+        assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
 
         b_path = True
 
@@ -129,7 +129,7 @@ def get_settings_json_filename():
     return os.path.expandvars(os.path.join('$APPDATA', 'Code', 'User', 'settings.json'))
 
 
-def revise_settings_json(json_filename=get_settings_json_filename()):
+def revise_settings_json(json_filename=get_settings_json_filename(), b_save=False):
 
     json_for_bash = {'terminal.integrated.shell.windows': get_bash_path()}
 
@@ -147,7 +147,7 @@ def revise_settings_json(json_filename=get_settings_json_filename()):
     assert os.path.exists(settings['terminal.integrated.shell.windows']), settings
     assert os.path.isfile(settings['terminal.integrated.shell.windows']), settings
 
-    if settings != backup:
+    if b_save and (settings != backup):
         with open(json_filename, 'w') as json_file:
             json.dump(settings, json_file)
 
