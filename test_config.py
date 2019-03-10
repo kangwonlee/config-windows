@@ -141,3 +141,10 @@ def test_add_python_folder_to_path():
     python_folder = os.path.split(sys.executable)[0]
     result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, python_folder=python_folder)
     assert python_folder in result[1], result
+
+
+def test_add_python_folder_to_path_default():
+    bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
+    result = config.add_python_folder_to_path(bashrc_text)
+
+    assert False, result
