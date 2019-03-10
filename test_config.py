@@ -109,15 +109,6 @@ def test_which_python():
     assert result
 
 
-def test_get_python_path():
-    result = config.get_python_folder()
-
-    assert os.path.exists(result), f"{result} does not exist?"
-    assert os.path.isdir(result), f"{result} is not a folder?"
-    assert ('python' in os.listdir(result)) or ('python.exe' in os.listdir(result)), os.listdir(result)
-    assert os.path.exists(os.path.join(str(result), 'python.exe'))
-
-
 def test_can_bash_find_python_yes():
     import sys
     input_string = sys.executable
