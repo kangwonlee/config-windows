@@ -2,6 +2,10 @@ language : shell
 
 os : windows
 
+cache :
+  directories :
+    - $HOME/AppData/Local/Temp/chocolatey
+
 install :
   # install anaconda
   - travis_wait 20 choco install anaconda3 --params '"/JustMe /D:c:\Users\travis"'
