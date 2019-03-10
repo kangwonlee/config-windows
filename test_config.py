@@ -178,3 +178,7 @@ def test_has_folder_python_no():
         )
 
     assert not config.has_folder_python(pardir_of_python_folder), (pardir_of_python_folder, config.has_folder_python(pardir_of_python_folder))
+
+
+def test_revise_settings_json():
+    config.revise_settings_json(b_save=False)
