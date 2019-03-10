@@ -168,7 +168,9 @@ def revise_settings_json(json_filename=get_settings_json_filename(), b_save=Fals
     assert os.path.exists(settings['terminal.integrated.shell.windows']), settings
     assert os.path.isfile(settings['terminal.integrated.shell.windows']), settings
 
+    print(f"b_save  = {b_save}\n")
     if b_save and (settings != backup):
+        print(f'writing to {json_filename}')
         with open(json_filename, 'w') as json_file:
             json.dump(settings, json_file)
 
