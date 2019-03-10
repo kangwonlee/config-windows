@@ -23,7 +23,7 @@ install :
   - which python
   # install python extension for vscode
   - code --install-extension ms-python.python
-  - code --extensions-dir
+  - code --list-extensions
 
 script :
   - nosetests && exit
