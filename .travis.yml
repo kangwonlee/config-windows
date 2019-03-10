@@ -5,6 +5,7 @@ os : windows
 install :
   # install anaconda
   - travis_wait choco install anaconda3 --params '"/JustMe /D:c:\Users\travis"'
+  - CONDA_PATH=/c/Users/travis/Anaconda3
   # install vscode
   - choco install vscode
   - . ~/.bashrc
@@ -13,7 +14,7 @@ install :
   # expected location of the vscode
   - VSCODE_PATH="/c/Program Files/Microsoft VS Code/bin"
   # add vscode path to PATH
-  - export PATH=$VSCODE_PATH:$PATH
+  - export PATH=$VSCODE_PATH:$CONDA_PATH:$PATH
   - echo $PATH
   - which code
   # install python extension for vscode
