@@ -182,3 +182,11 @@ def test_has_folder_python_no():
 
 def test_revise_settings_json():
     config.revise_settings_json(b_save=False)
+
+
+def test_get_unix_path_with_drive():
+    input_win_path = 'C:\\Users\\beachgoer\\.bashrc'
+    result = config.get_unix_path(input_win_path)
+    expected = '/c/Users/beachgoer/.bashrc'
+
+    assert expected == result, f"\nexpected : {expected}\nresult : {result}"
