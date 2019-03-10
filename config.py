@@ -50,7 +50,8 @@ def add_python_path(bashrc_txt, python_path=get_python_path()):
 
 
 def get_python_path():
-    return ''
+    import sys
+    return sys.executable
 
 
 def which_git():
