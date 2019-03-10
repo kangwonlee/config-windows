@@ -45,12 +45,12 @@ def can_bash_find_python(python_exe_path=which_python()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
 
-def get_path_containing_python():
+def get_python_folder_from_sys():
     import sys
     return os.path.split(sys.executable)[0]
 
 
-def add_python_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_path=get_path_containing_python()):
+def add_python_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_path=get_python_folder_from_sys()):
     if not bash_can_find_python:
 
         assert os.path.exists(python_path), python_path

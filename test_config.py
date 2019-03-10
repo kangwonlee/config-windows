@@ -128,3 +128,8 @@ def test_can_bash_find_python_no():
     input_string = ''
     result = config.can_bash_find_python(input_string)
     assert not result, input_string
+
+
+def test_get_python_folder_from_sys():
+    python_path = config.get_python_folder_from_sys()
+    assert ('python' in os.listdir(python_path)) or ('python.exe' in os.listdir(python_path)), os.listdir(python_path)
