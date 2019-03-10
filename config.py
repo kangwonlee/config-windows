@@ -38,7 +38,10 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
     does_file_exist(bash_filename)
     does_file_exist(conda_sh_filename)
 
-    txt = read_file(bash_filename)
+    if os.path.exists(bash_filename):
+        txt = read_file(bash_filename)
+    else:
+        txt = ''
 
     # add path
     # TODO : how to revise path?
@@ -126,8 +129,9 @@ def activate_conda(txt):
 
 def read_file(filename):
     txt = ''
-    with open(filename, 'r') as fp:
-        txt = fp.read()
+    if os.path.exists(filename):
+        with open(filename, 'r') as fp:
+            txt = fp.read()
     return txt
 
 
