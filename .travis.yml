@@ -30,7 +30,7 @@ install :
   - code --list-extensions
 
 script :
-  - $CONDA_PATH/Scripts/nosetests && exit
+  - $CONDA_PATH/Scripts/nosetests
 
 notifications : 
   email :
