@@ -136,8 +136,8 @@ def test_get_python_folder_from_sys():
     assert ('python' in os.listdir(python_path)) or ('python.exe' in os.listdir(python_path)), os.listdir(python_path)
 
 
-def test_add_python_path():
+def test_add_python_folder_to_path():
     input_text = ''
     python_folder = os.path.split(sys.executable)[0]
-    result = config.add_python_path(input_text, bash_can_find_python=False, python_path=python_folder)
+    result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, python_path=python_folder)
     assert python_folder in result, result
