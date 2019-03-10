@@ -167,3 +167,14 @@ def test_add_python_folder_to_path_default():
 
 def test_has_folder_python():
     assert config.has_folder_python(os.path.split(sys.executable)[0])
+
+
+def test_has_folder_python_no():
+
+    pardir_of_python_folder = os.path.abspath(
+            os.path.join(
+                os.path.split(sys.executable)[0], os.pardir
+            )
+        )
+
+    assert not config.has_folder_python(pardir_of_python_folder), (pardir_of_python_folder, config.has_folder_python(pardir_of_python_folder))
