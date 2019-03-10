@@ -4,7 +4,7 @@ os : windows
 
 install :
   # install anaconda
-  - travis_wait choco install anaconda3 --params '"/JustMe /D:c:\Users\travis"'
+  - travis_wait 15 choco install anaconda3 --params '"/JustMe /D:c:\Users\travis"'
   - CONDA_PATH=/c/Users/travis/Anaconda3
   # install vscode
   - choco install vscode
