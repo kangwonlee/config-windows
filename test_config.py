@@ -149,6 +149,21 @@ def test_add_python_folder_to_path():
 
 def test_add_python_folder_to_path_default():
     bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
-    result = config.add_python_folder_to_path(bashrc_text)
+    b_update, result = config.add_python_folder_to_path(bashrc_text)
 
-    assert False, result
+    result_lines = result.splitlines()
+
+    b_anaconda_in_path = False
+
+    for line in result_lines:
+        if line.startswith("export"):
+            words = line.strip().split()
+            if "export"==words[0] and words[1].startswith('PATH='):
+                path_list = words[1].split('=')[1].split(':')
+
+                for folder in path_list:
+                    if has_folder_python(folder):
+                        b_anaconda_in_path = True
+                        break
+
+    assert (b_anaconda_in_path) or ((not b_update) and config.can_bash_find_python())
