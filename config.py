@@ -42,7 +42,7 @@ def add_python_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), pyt
 
         assert os.path.exists(python_path), python_path
         assert os.path.isdir(python_path), python_path
-        assert 'python' in os.listdir(python_path), os.listdir(python_path)
+        assert ('python' in os.listdir(python_path)) or ('python.exe' in os.listdir(python_path)), os.listdir(python_path)
 
         bashrc_txt += f'\nexport PATH={python_path}:$PATH\n'
     
