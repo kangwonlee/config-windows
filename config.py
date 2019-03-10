@@ -149,7 +149,10 @@ def get_settings_json_filename():
 
 def revise_settings_json(json_filename=get_settings_json_filename(), b_save=False):
 
-    json_for_bash = {'terminal.integrated.shell.windows': get_bash_path()}
+    json_for_bash = {
+        'python.pythonPath': 'C:\\Users\\cad\\Anaconda3\\python.exe',
+        'terminal.integrated.shell.windows': get_bash_path(),
+    }
 
     if os.path.exists(get_settings_json_filename()):
         with open(json_filename, 'r') as json_file:
