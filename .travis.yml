@@ -26,7 +26,7 @@ install :
   - code --list-extensions
 
 script :
-  - nosetests && exit
+  - $CONDA_PATH/Scripts/nosetests && exit
 
 notifications : 
   email :
