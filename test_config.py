@@ -105,8 +105,7 @@ def test_is_anaconda_in_bash_env_path_not():
 
 def test_which_python():
     result = config.which_python()
-
-    assert result
+    assert isinstance(result, str)
 
 
 def test_can_bash_find_python_yes():
