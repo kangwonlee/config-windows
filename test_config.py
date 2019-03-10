@@ -1,11 +1,11 @@
 import config
 import os
 import shutil
+import subprocess
 import sys
 
 
 def test_does_this_file_exist():
-    # Following should not raise an exception
     config.does_file_exist(__file__)
 
 
@@ -145,14 +145,20 @@ def test_add_python_folder_to_path_default():
         if line.startswith("export"):
             words = line.strip().split()
             if "export"==words[0] and words[1].startswith('PATH='):
-                path_list = words[1].split('=')[1].split(':')
+                # located PATH line
+                bash_path = str(subprocess.check_output([config.get_bash_path(), '-c', f"{words[1]};echo $PATH"]), 'utf-8')
+                unix_path_list = bash_path.split(':')
 
-                for folder in path_list:
-                    if config.has_folder_python(folder):
+                for folder in unix_path_list:
+                    if 'Anaconda3' in folder:
                         b_anaconda_in_path = True
                         break
 
-    assert (b_anaconda_in_path) or ((not b_update) and config.can_bash_find_python())
+    assert (b_anaconda_in_path) or ((not b_update) and config.can_bash_find_python()), ("\n"
+        f"b_anaconda_in_path = {b_anaconda_in_path}\n"
+        f"not b_update = {not b_update}\n"
+        f"config.can_bash_find_python() = {config.can_bash_find_python()}\n"
+        )
 
 
 def test_has_folder_python():
