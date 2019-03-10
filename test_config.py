@@ -1,6 +1,7 @@
 import config
 import os
 import shutil
+import sys
 
 
 def test_does_this_file_exist():
@@ -9,8 +10,8 @@ def test_does_this_file_exist():
 
 
 def test_get_conda_sh_filename():
-    result = config.get_conda_sh_filename()
 
+    result = config.get_conda_sh_filename()
     assert isinstance(result, str)
 
     result_list = result.split(os.sep)
@@ -133,3 +134,10 @@ def test_can_bash_find_python_no():
 def test_get_python_folder_from_sys():
     python_path = config.get_python_folder_from_sys()
     assert ('python' in os.listdir(python_path)) or ('python.exe' in os.listdir(python_path)), os.listdir(python_path)
+
+
+def test_add_python_path():
+    input_text = ''
+    python_folder = os.path.split(sys.executable)[0]
+    result = config.add_python_path(input_text, bash_can_find_python=False, python_path=python_folder)
+    assert python_folder in result, result
