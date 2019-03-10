@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 
 
 def get_bashrc_filename():
@@ -9,8 +10,8 @@ def get_bashrc_filename():
 
 
 def does_file_exist(filename):
-    if not os.path.exists(filename):
 
+    if not os.path.exists(filename):
         raise FileNotFoundError(f'{filename} not found')
 
 
@@ -47,7 +48,6 @@ def can_bash_find_python(python_exe_path=which_python()):
 
 
 def get_python_folder_from_sys():
-    import sys
     return os.path.split(sys.executable)[0]
 
 
