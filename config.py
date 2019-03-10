@@ -20,7 +20,13 @@ def get_python_folder_from_sys():
 
 
 def get_conda_sh_filename():
-    return os.path.expanduser(os.path.join('~', 'Anaconda3', 'etc', 'profile.d', 'conda.sh'))
+    python_path = get_python_folder_from_sys()
+    conda_sh_filename = os.path.join(python_path, 'etc', 'profile.d', 'conda.sh')
+
+    assert os.path.exists(conda_sh_filename), conda_sh_filename
+    assert os.path.isfile(conda_sh_filename), conda_sh_filename
+
+    return os.path.join(python_path, 'etc', 'profile.d', 'conda.sh')
 
 
 def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_conda_sh_filename()):
