@@ -21,7 +21,7 @@ install :
   - code --extensions-dir
 
 script :
-  - python -m nose
+  - nosetests
 
 notifications : 
   email :
