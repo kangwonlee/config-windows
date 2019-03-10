@@ -17,6 +17,10 @@ install :
   - export PATH=$VSCODE_PATH:$CONDA_PATH:$PATH
   - echo $PATH
   - which code
+  - which python
+  - hash -r
+  - which code
+  - which python
   # install python extension for vscode
   - code --install-extension ms-python.python
   - code --extensions-dir
