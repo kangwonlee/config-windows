@@ -15,6 +15,18 @@ def does_file_exist(filename):
         raise FileNotFoundError(f'{filename} not found')
 
 
+def get_unix_path(win_path):
+
+    if ':' in win_path:
+        drive, win_path_under_drive = win_path.split(':')
+        unix_path_under_drive = win_path_under_drive.replace('\\', '/')
+        unix_path = f"/{drive.lower()}{unix_path_under_drive}"
+    else:
+        unix_path = win_path.replace('\\', '/')
+
+    return unix_path
+        
+
 def has_folder_python(folder):
     return ('python' in os.listdir(folder)) or ('python.exe' in os.listdir(folder))
 
