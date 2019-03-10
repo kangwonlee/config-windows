@@ -73,7 +73,7 @@ def which_git():
 def get_bash_path():
     git_exe_path = which_git()
     git_path_list = git_exe_path.split(os.sep)
-    result = os.sep.join(git_path_list[:-2] + ['bin', 'bash.exe'])
+    result = os.sep.join(git_path_list[:-3] + ['bin', 'bash.exe'])
 
     assert os.path.exists(result), result
     assert os.path.isfile(result), result
