@@ -47,7 +47,7 @@ def get_conda_sh_filename():
 
 def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_conda_sh_filename()):
 
-    does_file_exist(bash_filename)
+    # does_file_exist(bash_filename)
     does_file_exist(conda_sh_filename)
 
     if os.path.exists(bash_filename):
