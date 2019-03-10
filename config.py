@@ -27,12 +27,13 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
 
     # add path
     # TODO : how to revise path?
+    b_path, txt = add_python_folder_to_path(txt)
 
     # activate conda
     b_conda, txt = activate_conda(txt)
 
     # write to file if revised
-    if b_conda:
+    if b_path or b_conda:
         with open(bash_filename, 'w') as bashrc:
             bashrc.write(txt)
 
