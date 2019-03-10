@@ -79,7 +79,7 @@ def can_bash_find_python(python_exe_path=which_python()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
 
-def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_python_folder_from_sys()):
+def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_unix_path(get_python_folder_from_sys())):
     b_path = False
     if not bash_can_find_python:
 
