@@ -67,7 +67,7 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
         assert os.path.exists(python_folder), python_folder
         assert os.path.isdir(python_folder), python_folder
-        assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
+        assert has_folder_python(python_folder)
 
         b_path = True
 
