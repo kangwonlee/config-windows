@@ -122,10 +122,26 @@ def get_settings_json_filename():
 
 
 def revise_settings_json(json_filename=get_settings_json_filename()):
+
+    json_for_bash = {'terminal.integrated.shell.windows': get_bash_path()}
+
     with open(json_filename, 'r') as json_file:
         settings = json.load(json_file)
 
-    print(settings)
+    backup = dict(settings)
+
+    print(f'before : {settings}')
+
+    settings.update(json_for_bash)
+
+    print(f'after  : {settings}')
+
+    assert os.path.exists(settings['terminal.integrated.shell.windows']), settings
+    assert os.path.isfile(settings['terminal.integrated.shell.windows']), settings
+
+    if settings != backup:
+        with open(json_filename, 'r') as json_file:
+            json.dump(settings, json_file)
 
 
 def main():
