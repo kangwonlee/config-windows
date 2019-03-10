@@ -15,6 +15,10 @@ def does_file_exist(filename):
         raise FileNotFoundError(f'{filename} not found')
 
 
+def has_folder_python(folder):
+    return ('python' in os.listdir(folder)) or ('python.exe' in os.listdir(folder))
+
+
 def get_python_folder_from_sys():
     return os.path.split(sys.executable)[0]
 

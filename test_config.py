@@ -133,11 +133,7 @@ def test_can_bash_find_python_no():
 
 def test_get_python_folder_from_sys():
     python_path = config.get_python_folder_from_sys()
-    assert has_folder_python(python_path)
-
-
-def has_folder_python(folder):
-    return ('python' in os.listdir(folder)) or ('python.exe' in os.listdir(folder)), os.listdir(folder)
+    assert config.has_folder_python(python_path)
 
 
 def test_add_python_folder_to_path():
@@ -162,7 +158,7 @@ def test_add_python_folder_to_path_default():
                 path_list = words[1].split('=')[1].split(':')
 
                 for folder in path_list:
-                    if has_folder_python(folder):
+                    if config.has_folder_python(folder):
                         b_anaconda_in_path = True
                         break
 
