@@ -151,6 +151,8 @@ def revise_settings_json(json_filename=get_settings_json_filename(), b_save=Fals
         with open(json_filename, 'w') as json_file:
             json.dump(settings, json_file)
 
+    return settings
+
 
 def main():
     revise_settings_json()
