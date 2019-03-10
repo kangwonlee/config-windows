@@ -14,7 +14,7 @@ install :
   # expected location of the vscode
   - VSCODE_PATH="/c/Program Files/Microsoft VS Code/bin"
   # add vscode path to PATH
-  - export PATH=$VSCODE_PATH:$CONDA_PATH:$PATH
+  - export PATH=$VSCODE_PATH:$CONDA_PATH:$CONDA_PATH/Scripts:$PATH
   - echo $PATH
   - which code
   - which python
