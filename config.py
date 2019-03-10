@@ -37,7 +37,20 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
             bashrc.write(txt)
 
 
-def add_python_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_path=get_python_path()):
+def which_python():
+    return shutil.which('python')
+
+
+def can_bash_find_python(python_exe_path=which_python()):
+    return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
+
+
+def get_path_containing_python():
+    import sys
+    return os.path.split(sys.executable)[0]
+
+
+def add_python_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_path=get_path_containing_python()):
     if not bash_can_find_python:
 
         assert os.path.exists(python_path), python_path
@@ -49,17 +62,8 @@ def add_python_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), pyt
     return bashrc_txt
 
 
-def get_python_path():
-    import sys
-    return sys.executable
-
-
 def which_git():
     return shutil.which('git')
-
-
-def which_python():
-    return shutil.which('python')
 
 
 def get_bash_path():
@@ -86,10 +90,6 @@ def get_python_folder():
     python_exe_path = which_python()
     python_path_str = os.path.split(python_exe_path)[0]
     return python_path_str
-
-
-def can_bash_find_python(python_exe_path=which_python()):
-    return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
 
 def activate_conda(txt):
