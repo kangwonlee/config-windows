@@ -77,6 +77,10 @@ def which_python_win_path():
     return result_win_path
 
 
+def which_python_unix_path():
+    return run_cmd_in_bash('which python').strip()
+
+
 def can_bash_find_python(python_exe_path=which_python_win_path()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
