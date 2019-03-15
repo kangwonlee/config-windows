@@ -123,7 +123,7 @@ def get_bash_env_path():
 
 
 def run_cmd_in_bash(cmd_str):
-    return subprocess.check_output([get_bash_path(), '-c', cmd_str])
+    return str(subprocess.check_output([get_bash_path(), '-c', cmd_str]), encoding='utf-8')
 
 
 def is_anaconda_in_bash_env_path(bash_env_path=get_bash_env_path()):

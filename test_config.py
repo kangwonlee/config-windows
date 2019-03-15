@@ -198,6 +198,6 @@ def test_get_unix_path_without_drive():
 
 def test_run_cmd_in_bash():
     result = config.run_cmd_in_bash('true && echo $?')
-    expected = b'0\n'
+    expected = '0\n'
 
     assert result == expected, result
