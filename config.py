@@ -107,6 +107,10 @@ def which_git():
     return result
 
 
+def which_git_unix_path():
+    return run_cmd_in_bash('which git')
+
+
 def get_bash_path():
     git_exe_path = which_git()
     git_path_list = git_exe_path.split(os.sep)
