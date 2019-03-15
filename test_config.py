@@ -104,7 +104,7 @@ def test_is_anaconda_in_bash_env_path_not():
 
 
 def test_which_python():
-    result = config.which_python()
+    result = config.which_python_win_path()
     assert isinstance(result, str)
 
 
@@ -194,3 +194,35 @@ def test_get_unix_path_without_drive():
     expected = 'Users/beachgoer/.bashrc'
 
     assert expected == result, f"\nexpected : {expected}\nresult : {result}"
+
+
+def test_run_cmd_in_bash():
+    result = config.run_cmd_in_bash('true && echo $?')
+    expected = '0\n'
+
+    assert result == expected, result
+
+
+def test_which_python_unix_path():
+    result = config.which_python_unix_path()
+
+    assert result.startswith('/'), (sys.executable, result)
+    assert result.strip().endswith('python'), (sys.executable, result)
+
+    drive_letter = result[1].upper()
+    result_list = result.split('/')
+    result_win_path = drive_letter + ':\\' + os.sep.join(result_list[2:]) + '.exe'
+
+    # `which python` result may be different from `sys.executable`
+
+    assert os.path.exists(result_win_path), (sys.executable, result_win_path)
+    assert os.path.isfile(result_win_path), (sys.executable, result_win_path)
+
+
+def test_add_alias_line():
+    input_string = '# 1 2 3'
+
+    result = config.add_alias_line(input_string)
+
+    assert input_string in result, result
+    assert 'alias' in result, result

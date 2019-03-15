@@ -45,6 +45,13 @@ def get_conda_sh_filename():
     return os.path.join(python_path, 'etc', 'profile.d', 'conda.sh')
 
 
+def add_alias_line(bashrc_txt):
+
+    alias_line = 'alias log="git log --oneline --graph --all --color --decorated"\n'
+
+    return '\n'.join([bashrc_txt, alias_line])
+
+
 def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_conda_sh_filename()):
 
     # does_file_exist(bash_filename)
@@ -70,14 +77,18 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
             bashrc.write(txt)
 
 
-def which_python():
-    result = shutil.which('python')
-    if result is None:
-        result = ''
-    return result
+def which_python_win_path():
+    result_win_path = shutil.which('python')
+    if result_win_path is None:
+        result_win_path = ''
+    return result_win_path
 
 
-def can_bash_find_python(python_exe_path=which_python()):
+def which_python_unix_path():
+    return run_cmd_in_bash('which python').strip()
+
+
+def can_bash_find_python(python_exe_path=which_python_win_path()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
 
@@ -91,7 +102,7 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
         b_path = True
 
-        bashrc_txt += f'\nexport PATH={python_folder}:$PATH\n'
+        bashrc_txt += f'\nexport PATH={python_folder}:{python_folder}/Library/bin:$PATH\n'
     
     return b_path, bashrc_txt
 
@@ -101,6 +112,10 @@ def which_git():
     if result is None:
         result = ''
     return result
+
+
+def which_git_unix_path():
+    return run_cmd_in_bash('which git')
 
 
 def get_bash_path():
@@ -119,7 +134,11 @@ def get_bash_path():
 
 
 def get_bash_env_path():
-    return subprocess.check_output([get_bash_path(), '-c', 'echo $PATH'])
+    return run_cmd_in_bash('echo $PATH')
+
+
+def run_cmd_in_bash(cmd_str):
+    return str(subprocess.check_output([get_bash_path(), '-c', cmd_str]), encoding='utf-8')
 
 
 def is_anaconda_in_bash_env_path(bash_env_path=get_bash_env_path()):
@@ -150,7 +169,7 @@ def get_settings_json_filename():
 def revise_settings_json(json_filename=get_settings_json_filename(), b_save=False):
 
     json_for_bash = {
-        'python.pythonPath': 'C:\\Users\\cad\\Anaconda3\\python.exe',
+        'python.pythonPath': os.path.join(get_python_folder_from_sys(), 'python.exe'),
         'terminal.integrated.shell.windows': get_bash_path(),
     }
 
