@@ -214,3 +214,12 @@ def test_which_python_unix_path():
     result_win_path = drive_letter + ':\\' + os.sep.join(result_list[2:])
 
     assert sys.executable.startswith(result_win_path), (sys.executable, result_win_path)
+
+
+def test_add_alias_line():
+    input_string = '# 1 2 3'
+
+    result = config.add_alias_line(input_string)
+
+    assert input_string in result, result
+    assert 'alias' in result, result
