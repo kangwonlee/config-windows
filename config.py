@@ -119,7 +119,7 @@ def get_bash_path():
 
 
 def get_bash_env_path():
-    return subprocess.check_output([get_bash_path(), '-c', 'echo $PATH'])
+    return run_cmd_in_bash('echo $PATH')
 
 
 def run_cmd_in_bash(cmd_str):
