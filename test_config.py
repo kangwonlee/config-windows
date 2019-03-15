@@ -223,3 +223,24 @@ def test_add_alias_line():
 
     assert input_string in result, result
     assert 'alias' in result, result
+
+
+def test_import_pylab():
+    # see if pylab works
+
+    output_file_name = 'sine.png' 
+
+    if os.path.exists(output_file_name):
+        os.remove(output_file_name)
+
+    run_these = [
+        '. run_this.sh',
+        '. ~/.bashrc',
+        f'''{sys.executable} -c "from pylab import *;x_deg=arange(360);x_rad=deg2rad(x_deg);y=sin(x_rad);plot(x_deg,y);savefig('sine.png')"''',
+    ]
+
+    cmd_string = ' && '.join(run_these)
+
+    subprocess.check_call(cmd_string)
+
+    assert os.path.exists(output_file_name)
