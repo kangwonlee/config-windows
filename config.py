@@ -70,14 +70,14 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
             bashrc.write(txt)
 
 
-def which_python():
+def which_python_win_path():
     result_win_path = shutil.which('python')
     if result_win_path is None:
         result_win_path = ''
     return result_win_path
 
 
-def can_bash_find_python(python_exe_path=which_python()):
+def can_bash_find_python(python_exe_path=which_python_win_path()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
 
