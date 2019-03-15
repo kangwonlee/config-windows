@@ -211,7 +211,7 @@ def test_which_python_unix_path():
 
     drive_letter = result[1].upper()
     result_list = result.split('/')
-    result_win_path = drive_letter + ':\\' + os.sep.join(result_list[2:])
+    result_win_path = drive_letter + ':\\' + os.sep.join(result_list[2:]) + '.exe'
 
     # `which python` result may be different from `sys.executable`
 
