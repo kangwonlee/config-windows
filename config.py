@@ -45,13 +45,11 @@ def get_conda_sh_filename():
     return os.path.join(python_path, 'etc', 'profile.d', 'conda.sh')
 
 
-def add_alias_lines(bashrc_txt):
-    if '\n' != bashrc_txt[-1]:
-        bashrc_txt += '\n'
+def add_alias_line(bashrc_txt):
 
-    bashrc_txt += 'alias log="git log --oneline --graph --all --color --decorated"\n'
+    alias_line = 'alias log="git log --oneline --graph --all --color --decorated"\n'
 
-    return bashrc_txt
+    return '\n'.join([bashrc_txt, alias_line])
 
 
 def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_conda_sh_filename()):
