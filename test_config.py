@@ -201,3 +201,16 @@ def test_run_cmd_in_bash():
     expected = '0\n'
 
     assert result == expected, result
+
+
+def test_which_python_unix_path():
+    result = config.which_python_unix_path()
+
+    assert result.startswith('/'), (sys.executable, result)
+    assert result.strip().endswith('python'), (sys.executable, result)
+
+    drive_letter = result[1].upper()
+    result_list = result.split('/')
+    result_win_path = drive_letter + ':\\' + os.sep.join(result_list[2:])
+
+    assert sys.executable.startswith(result_win_path), (sys.executable, result_win_path)
