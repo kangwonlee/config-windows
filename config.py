@@ -95,7 +95,7 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
         b_path = True
 
-        bashrc_txt += f'\nexport PATH={python_folder}:$PATH\n'
+        bashrc_txt += f'\nexport PATH={python_folder}:{python_folder}/Library/bin:$PATH\n'
     
     return b_path, bashrc_txt
 
