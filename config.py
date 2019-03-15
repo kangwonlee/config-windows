@@ -122,6 +122,10 @@ def get_bash_env_path():
     return subprocess.check_output([get_bash_path(), '-c', 'echo $PATH'])
 
 
+def run_cmd_in_bash(cmd_str):
+    return subprocess.check_output([get_bash_path(), '-c', cmd_str])
+
+
 def is_anaconda_in_bash_env_path(bash_env_path=get_bash_env_path()):
     env_path_list = bash_env_path.split(':')
     return any(map(lambda x : '/Anaconda3' in x, env_path_list))
