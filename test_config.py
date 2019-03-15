@@ -211,9 +211,12 @@ def test_which_python_unix_path():
 
     drive_letter = result[1].upper()
     result_list = result.split('/')
-    result_win_path = drive_letter + ':\\' + os.sep.join(result_list[2:])
+    result_win_path = drive_letter + ':\\' + os.sep.join(result_list[2:]) + '.exe'
 
-    assert sys.executable.startswith(result_win_path), (sys.executable, result_win_path)
+    # `which python` result may be different from `sys.executable`
+
+    assert os.path.exists(result_win_path), (sys.executable, result_win_path)
+    assert os.path.isfile(result_win_path), (sys.executable, result_win_path)
 
 
 def test_add_alias_line():
