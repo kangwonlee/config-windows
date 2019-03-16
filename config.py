@@ -95,9 +95,7 @@ def can_bash_find_python(python_exe_path=which_python_win_path()):
 
 def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), conda_folder=get_python_folder_from_sys()):
 
-    assert os.path.exists(conda_folder), conda_folder
-    assert os.path.isdir(conda_folder), conda_folder
-    assert ('python' in os.listdir(conda_folder)) or ('python.exe' in os.listdir(conda_folder)), os.listdir(conda_folder)
+    assert_conda_folder_host(conda_folder)
     conda_unix_folder = get_unix_path(conda_folder)
 
     conda_lib_bin_folder_host = os.path.join(conda_folder, 'Library', 'bin')
@@ -124,6 +122,12 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
     new_bashrc_txt = bashrc_txt.replace(export_path_line, new_export_path_str) 
     
     return new_export_path_str != export_path_line, new_bashrc_txt, new_export_path_str
+
+
+def assert_conda_folder_host(conda_folder):
+    assert os.path.exists(conda_folder), conda_folder
+    assert os.path.isdir(conda_folder), conda_folder
+    assert ('python' in os.listdir(conda_folder)) or ('python.exe' in os.listdir(conda_folder)), os.listdir(conda_folder)
 
 
 def get_last_match(export_path_re, bashrc_txt):
