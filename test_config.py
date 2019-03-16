@@ -284,6 +284,28 @@ export PATH={expected_1}
     assert expected_1 in result, (r, result, input_text)
 
 
+def test_get_re_export_path_sample_search():
+    expected = '~/Anaconda3:$PATH'
+    expected_1 = '~/Anaconda3:/~/Anaconda3/Library/bin:$PATH'
+
+    r = config.get_re_export_path()
+
+    input_text = f'''export LANG=en_US.utf8
+export PATH={expected}
+. ~/Anaconda3/etc/profile.d/conda.sh
+alias log="git log --oneline --graph --all --decorate"
+
+export PATH={expected_1}
+'''
+
+    result = None
+
+    result = r.search(input_text)
+
+    assert expected in result.group(0), (r, result, input_text)
+    assert expected in result.group(1), (r, result, input_text)
+
+
 def test_add_to_list_unique_at_0():
     list_input = ['zzz']
     add0 = 'abc'
