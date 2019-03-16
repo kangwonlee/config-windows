@@ -172,6 +172,17 @@ def test_add_python_folder_to_path_default():
         f"config.can_bash_find_python() = {config.can_bash_find_python()}\n"
         )
 
+    import_pylab_attempt = config.run_cmd_in_bash(
+        ' && '.join(
+            [
+                f"export PATH={new_path_value}",
+                'python -c "import pylab as py"',
+            ]
+        )
+    )
+
+    assert 'error' not in import_pylab_attempt, import_pylab_attempt
+
 
 def test_has_folder_python():
     assert config.has_folder_python(os.path.split(sys.executable)[0])
