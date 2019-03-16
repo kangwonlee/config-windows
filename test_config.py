@@ -251,3 +251,14 @@ def test_get_re_export_path():
     assert expected in result, (r, result, input_text)
     assert expected_1 in result, (r, result, input_text)
     assert not_expected not in result, (r, result, input_text)
+
+
+def test_add_to_list_unique_at_0():
+    list_input = ['zzz']
+    add0 = 'abc'
+    add1 = 'def'
+
+    result = config.add_to_list_unique_at_0(list_input, add0, add1)
+
+    assert result[0] == add0, result
+    assert result[1] == add1, result
