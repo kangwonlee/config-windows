@@ -128,8 +128,21 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
 
 def condition_bashrc_txt(bashrc_txt, export_path_re=get_re_export_path()):
+
     if not export_path_re.search(bashrc_txt):
+        # if no line with "export PATH="
         bashrc_txt += '\nexport PATH=$PATH\n'
+    else:
+        # typo 
+        for match in export_path_re.finditer(bashrc_txt):
+            path_value = match.group(1)
+            folder_list = split_path_into_folders(path_value)
+            for folder in folder_list:
+                assert any((
+                    os.path.exists(folder),
+                    os.path.expanduser(folder),
+                    os.path.expandvars(folder),
+                    )), (folder, folder_list)
 
     return bashrc_txt
 
