@@ -226,3 +226,28 @@ def test_add_alias_line():
 
     assert input_string in result, result
     assert 'alias' in result, result
+
+
+def test_get_re_export_path():
+    expected = 'Find/This/line:Expected'
+    expected_1 = 'Find/This/line:Expected1'
+
+    not_expected = 'DontFind/This/line:NotExpected1'
+
+    r = config.get_re_export_path()
+
+    input_text = (
+        'abc\n'
+        f'export PATH={expected}\n'
+        'def\n'
+        f'export PATH={expected_1}\n'
+        'ghi\n'
+        f'export NOTPATH={not_expected}\n'
+        'jkl\n'
+    )
+
+    result = r.findall(input_text)
+
+    assert expected in result, (r, result, input_text)
+    assert expected_1 in result, (r, result, input_text)
+    assert not_expected not in result, (r, result, input_text)
