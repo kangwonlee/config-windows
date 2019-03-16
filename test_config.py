@@ -146,7 +146,8 @@ alias log="git log --oneline --graph --all --decorate"
 
 def test_add_python_folder_to_path_default():
     bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
-    b_update, result = config.add_python_folder_to_path(bashrc_text)
+    result_list = config.add_python_folder_to_path(bashrc_text)
+    b_update, result = result_list[0], result_list[1], 
 
     result_lines = result.splitlines()
 

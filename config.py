@@ -65,7 +65,7 @@ def revise_bashrc(bash_filename=get_bashrc_filename(), conda_sh_filename=get_con
 
     # add path
     # TODO : how to revise path?
-    b_path, txt = add_python_folder_to_path(txt)
+    b_path, txt, _ = add_python_folder_to_path(txt)
 
     # activate conda
     b_conda, txt = activate_conda(txt)
@@ -123,7 +123,7 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
     new_bashrc_txt = bashrc_txt.replace(export_path_line, new_export_path_str) 
     
-    return new_export_path_str != export_path_line, new_bashrc_txt
+    return new_export_path_str != export_path_line, new_bashrc_txt, new_export_path_str
 
 
 def get_last_match(export_path_re, bashrc_txt):
