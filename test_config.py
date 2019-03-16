@@ -366,3 +366,9 @@ def test_add_to_list_unique_at_0():
 
     assert result[0] == add0, result
     assert result[1] == add1, result
+
+
+def test_condition_bashrc_txt_err01():
+    txt = ''''''
+
+    result = config.condition_bashrc_txt(txt)
