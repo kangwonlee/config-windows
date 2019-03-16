@@ -140,16 +140,33 @@ def condition_bashrc_txt(bashrc_txt, export_path_re=get_re_export_path()):
             for folder in folder_list:
                 assert any((
                         os.path.exists(folder),
-                        os.path.exists(os.path.expanduser(folder)),
+                        os.path.exists(os.path.abspath(folder)),
                         os.path.exists(os.path.expandvars(folder)),
                     )), {
                             'folder': folder, 
-                            'os.path.expanduser(folder)': os.path.expanduser(folder),
-                            'os.path.expandvars(folder)': os.path.expandvars(folder),
+                            'os.path.abspath(folder)': os.path.abspath(folder),
+                            'os.path.realpath(folder)': os.path.realpath(folder),
                             'folder_list':folder_list,
                         }
 
     return bashrc_txt
+
+
+def get_win_path(unix_path):
+    path_list = unix_path.split('/')
+
+    result = ''
+
+    if not path_list[0]:
+        if 1 == len(path_list[1]):
+            path_list[1] = path_list[1] + ':'
+            del path_list[0]
+            result = '\\'.join(path_list)
+    else:
+        pass
+    
+
+        
 
 
 def assert_conda_lib_bin_folder_host(conda_lib_bin_folder_host):
