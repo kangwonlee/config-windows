@@ -112,6 +112,10 @@ def get_re_export_path():
     return re.compile(r"^export\s+PATH=(.*)$", re.M)
 
 
+def split_path_into_folders(path_str):
+    return path_str.split(':')
+
+
 def which_git():
     result = shutil.which('git')
     if result is None:
