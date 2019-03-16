@@ -142,7 +142,12 @@ def condition_bashrc_txt(bashrc_txt, export_path_re=get_re_export_path()):
                         os.path.exists(folder),
                         os.path.exists(os.path.expanduser(folder)),
                         os.path.exists(os.path.expandvars(folder)),
-                    )), (folder, folder_list)
+                    )), {
+                            'folder': folder, 
+                            'os.path.expanduser(folder)': os.path.expanduser(folder),
+                            'os.path.expandvars(folder)': os.path.expandvars(folder),
+                            'folder_list':folder_list,
+                        }
 
     return bashrc_txt
 
