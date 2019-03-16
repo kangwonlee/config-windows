@@ -264,7 +264,7 @@ def test_get_re_export_path():
     assert not_expected not in result, (r, result, input_text)
 
 
-def test_get_re_export_path_sample():
+def test_get_re_export_path_sample_findall():
     expected = '~/Anaconda3:$PATH'
     expected_1 = '~/Anaconda3:/~/Anaconda3/Library/bin:$PATH'
 
