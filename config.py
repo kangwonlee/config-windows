@@ -94,18 +94,31 @@ def can_bash_find_python(python_exe_path=which_python_win_path()):
 
 
 def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), python_folder=get_unix_path(get_python_folder_from_sys())):
-    b_path = False
-    if not bash_can_find_python:
 
-        # assert os.path.exists(python_folder), python_folder
-        # assert os.path.isdir(python_folder), python_folder
-        # assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
+    # assert os.path.exists(python_folder), python_folder
+    # assert os.path.isdir(python_folder), python_folder
+    # assert ('python' in os.listdir(python_folder)) or ('python.exe' in os.listdir(python_folder)), os.listdir(python_folder)
 
-        b_path = True
+    export_path_re = get_re_export_path()
 
-        bashrc_txt += f'\nexport PATH={python_folder}:{python_folder}/Library/bin:$PATH\n'
+    if not export_path_re.search(bashrc_txt):
+        bashrc_txt += '\nexport PATH=$PATH\n'
+
+    for match in export_path_re.finditer(bashrc_txt):
+        pass
+
+    export_path_line = match.group(0)
+    exported_path = match.group(1)
+
+    folders_in_path = split_path_into_folders(exported_path)
+
+    new_folders = add_to_list_unique_at_0(folders_in_path, python_folder, f"{python_folder}/Library/bin")
+
+    new_export_path_str = export_path_line.replace(exported_path, ':'.join(new_folders))
+
+    new_bashrc_txt = bashrc_txt.replace(export_path_line, new_export_path_str) 
     
-    return b_path, bashrc_txt
+    return new_export_path_str != export_path_line, new_bashrc_txt
 
 
 def get_re_export_path():
