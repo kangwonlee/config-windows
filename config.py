@@ -116,6 +116,17 @@ def split_path_into_folders(path_str):
     return path_str.split(':')
 
 
+def add_to_list_unique_at_0(this_list, *args):
+    index = 0
+
+    for arg in args:
+        if arg not in this_list:
+            this_list.insert(index, arg)
+            index += 1
+
+    return this_list
+
+
 def which_git():
     result = shutil.which('git')
     if result is None:
