@@ -1,16 +1,17 @@
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
 
 
 def get_bashrc_filename():
+
     return os.path.expanduser(os.path.join('~', '.bashrc'))
 
 
 def does_file_exist(filename):
-
     if not os.path.exists(filename):
         raise FileNotFoundError(f'{filename} not found')
 
