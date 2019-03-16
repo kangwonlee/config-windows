@@ -144,6 +144,36 @@ alias log="git log --oneline --graph --all --decorate"
     assert config.get_unix_path(python_folder) in result[1], result
 
 
+def test_add_python_folder_to_path_err01():
+
+    problem_string = ';$PATH'
+
+    input_text = f'''export LANG=en_US.utf8
+export PATH=~/Anaconda3{problem_string}
+. ~/Anaconda3/etc/profile.d/conda.sh
+alias log="git log --oneline --graph --all --decorate"
+'''
+    python_folder = os.path.split(sys.executable)[0]
+    result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, conda_folder=python_folder)
+    assert config.get_unix_path(python_folder) in result[1], result
+    assert problem_string not in result[1], result
+
+
+def test_add_python_folder_to_path_err02():
+
+    problem_string = ':$PAT'
+
+    input_text = f'''export LANG=en_US.utf8
+export PATH=~/Anaconda3{problem_string}
+. ~/Anaconda3/etc/profile.d/conda.sh
+alias log="git log --oneline --graph --all --decorate"
+'''
+    python_folder = os.path.split(sys.executable)[0]
+    result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, conda_folder=python_folder)
+    assert config.get_unix_path(python_folder) in result[1], result
+    assert problem_string not in result[1], result
+
+
 def test_add_python_folder_to_path_default():
     bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
     result_list = config.add_python_folder_to_path(bashrc_text)
