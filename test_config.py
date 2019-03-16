@@ -134,9 +134,9 @@ def test_add_python_folder_to_path():
 
 
 def test_add_python_folder_to_path_example():
-    input_text = '''export LANG=en_US.utf8
-export PATH=~/Anaconda3:$PATH
-. ~/Anaconda3/etc/profile.d/conda.sh
+    input_text = f'''export LANG=en_US.utf8
+export PATH={config.get_unix_path(config.get_python_folder_from_sys())}:$PATH
+. {config.get_unix_path(config.get_python_folder_from_sys())}/etc/profile.d/conda.sh
 alias log="git log --oneline --graph --all --decorate"
 '''
     python_folder = os.path.split(sys.executable)[0]
