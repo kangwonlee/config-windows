@@ -369,6 +369,11 @@ def test_add_to_list_unique_at_0():
 
 
 def test_condition_bashrc_txt_err01():
-    txt = ''''''
+    problem_string = ';$PATH'
+    txt = f'''export LANG=en_US.utf8
+export PATH=~/Anaconda3{problem_string}
+. ~/Anaconda3/etc/profile.d/conda.sh
+alias log="git log --oneline --graph --all --decorate"
+'''
 
     result = config.condition_bashrc_txt(txt)
