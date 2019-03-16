@@ -93,6 +93,10 @@ def can_bash_find_python(python_exe_path=which_python_win_path()):
     return os.path.exists(python_exe_path) and os.path.isfile(python_exe_path)
 
 
+def get_re_export_path():
+    return re.compile(r"^export\s+PATH=(.*)$", re.M)
+
+
 def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_python(), conda_folder=get_python_folder_from_sys()):
 
     assert_conda_folder_host(conda_folder)
@@ -105,8 +109,7 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
 
     export_path_re = get_re_export_path()
 
-    if not export_path_re.search(bashrc_txt):
-        bashrc_txt += '\nexport PATH=$PATH\n'
+    bashrc_txt = condition_bashrc_txt(bashrc_txt, export_path_re,)
 
     match = get_last_match(export_path_re, bashrc_txt)
 
@@ -122,6 +125,14 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
     new_bashrc_txt = bashrc_txt.replace(export_path_line, new_export_path_str) 
     
     return new_export_path_str != export_path_line, new_bashrc_txt, new_export_path_str
+
+
+def condition_bashrc_txt(bashrc_txt, export_path_re=get_re_export_path()):
+    if not export_path_re.search(bashrc_txt):
+        bashrc_txt += '\nexport PATH=$PATH\n'
+
+    return bashrc_txt
+
 
 def assert_conda_lib_bin_folder_host(conda_lib_bin_folder_host):
     assert os.path.exists(conda_lib_bin_folder_host), conda_lib_bin_folder_host
@@ -141,10 +152,6 @@ def get_last_match(export_path_re, bashrc_txt):
         pass
 
     return match
-
-
-def get_re_export_path():
-    return re.compile(r"^export\s+PATH=(.*)$", re.M)
 
 
 def split_path_into_folders(path_str):
