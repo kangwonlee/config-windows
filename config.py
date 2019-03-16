@@ -99,8 +99,8 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
     conda_unix_folder = get_unix_path(conda_folder)
 
     conda_lib_bin_folder_host = os.path.join(conda_folder, 'Library', 'bin')
-    assert os.path.exists(conda_lib_bin_folder_host), conda_lib_bin_folder_host
-    assert os.path.isdir(conda_lib_bin_folder_host), conda_lib_bin_folder_host
+
+    assert_conda_lib_bin_folder_host(conda_lib_bin_folder_host)
     conda_lib_bin_folder_unix = get_unix_path(conda_lib_bin_folder_host)
 
     export_path_re = get_re_export_path()
@@ -123,10 +123,13 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
     
     return new_export_path_str != export_path_line, new_bashrc_txt, new_export_path_str
 
+def assert_conda_lib_bin_folder_host(conda_lib_bin_folder_host):
+    assert os.path.exists(conda_lib_bin_folder_host), conda_lib_bin_folder_host
+    assert os.path.isdir(conda_lib_bin_folder_host), conda_lib_bin_folder_host
+
 
 def assert_conda_folder_host(conda_folder):
-    assert os.path.exists(conda_folder), conda_folder
-    assert os.path.isdir(conda_folder), conda_folder
+    assert_conda_lib_bin_folder_host(conda_folder)
     assert ('python' in os.listdir(conda_folder)) or ('python.exe' in os.listdir(conda_folder)), os.listdir(conda_folder)
 
 
