@@ -149,8 +149,8 @@ def test_add_python_folder_to_path_err01():
     problem_string = ';$PATH'
 
     input_text = f'''export LANG=en_US.utf8
-export PATH=~/Anaconda3{problem_string}
-. ~/Anaconda3/etc/profile.d/conda.sh
+export PATH={config.get_unix_path(config.get_python_folder_from_sys())}{problem_string}
+. {config.get_unix_path(config.get_python_folder_from_sys())}/etc/profile.d/conda.sh
 alias log="git log --oneline --graph --all --decorate"
 '''
     python_folder = os.path.split(sys.executable)[0]
@@ -164,8 +164,8 @@ def test_add_python_folder_to_path_err02():
     problem_string = ':$PAT'
 
     input_text = f'''export LANG=en_US.utf8
-export PATH=~/Anaconda3{problem_string}
-. ~/Anaconda3/etc/profile.d/conda.sh
+export PATH={config.get_unix_path(config.get_python_folder_from_sys())}{problem_string}
+. {config.get_unix_path(config.get_python_folder_from_sys())}/etc/profile.d/conda.sh
 alias log="git log --oneline --graph --all --decorate"
 '''
     python_folder = os.path.split(sys.executable)[0]
