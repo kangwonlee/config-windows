@@ -108,6 +108,10 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
     return b_path, bashrc_txt
 
 
+def get_re_export_path():
+    return re.compile(r"^export\s+PATH=(.*)$", re.M)
+
+
 def which_git():
     result = shutil.which('git')
     if result is None:
