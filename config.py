@@ -104,8 +104,7 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
     if not export_path_re.search(bashrc_txt):
         bashrc_txt += '\nexport PATH=$PATH\n'
 
-    for match in export_path_re.finditer(bashrc_txt):
-        pass
+    match = get_last_match(export_path_re, bashrc_txt)
 
     export_path_line = match.group(0)
     exported_path = match.group(1)
@@ -119,6 +118,16 @@ def add_python_folder_to_path(bashrc_txt, bash_can_find_python=can_bash_find_pyt
     new_bashrc_txt = bashrc_txt.replace(export_path_line, new_export_path_str) 
     
     return new_export_path_str != export_path_line, new_bashrc_txt
+
+
+def get_last_match(export_path_re, bashrc_txt):
+
+    match = False
+
+    for match in export_path_re.finditer(bashrc_txt):
+        pass
+
+    return match
 
 
 def get_re_export_path():
