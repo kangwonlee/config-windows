@@ -172,6 +172,11 @@ def test_add_python_folder_to_path_default():
         f"config.can_bash_find_python() = {config.can_bash_find_python()}\n"
         )
 
+
+def test_add_python_folder_to_path_default_new_path_value():
+    bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
+    b_update, result, new_path_value = config.add_python_folder_to_path(bashrc_text)
+
     import_pylab_attempt = config.run_cmd_in_bash(
         ' && '.join(
             [
@@ -181,7 +186,11 @@ def test_add_python_folder_to_path_default():
         )
     )
 
-    assert 'error' not in import_pylab_attempt, import_pylab_attempt
+    assert 'error' not in import_pylab_attempt.lower(), {
+        'import attempt response' : import_pylab_attempt, 
+        'b_update': b_update, 
+        'bash_string' : result, 
+    }
 
 
 def test_has_folder_python():
