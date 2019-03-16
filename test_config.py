@@ -129,13 +129,25 @@ def test_get_python_folder_from_sys():
 def test_add_python_folder_to_path():
     input_text = ''
     python_folder = os.path.split(sys.executable)[0]
-    result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, python_folder=python_folder)
-    assert python_folder in result[1], result
+    result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, conda_folder=python_folder)
+    assert config.get_unix_path(python_folder) in result[1], result
+
+
+def test_add_python_folder_to_path_example():
+    input_text = '''export LANG=en_US.utf8
+export PATH=~/Anaconda3:$PATH
+. ~/Anaconda3/etc/profile.d/conda.sh
+alias log="git log --oneline --graph --all --decorate"
+'''
+    python_folder = os.path.split(sys.executable)[0]
+    result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, conda_folder=python_folder)
+    assert config.get_unix_path(python_folder) in result[1], result
 
 
 def test_add_python_folder_to_path_default():
     bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
-    b_update, result = config.add_python_folder_to_path(bashrc_text)
+    result_list = config.add_python_folder_to_path(bashrc_text)
+    b_update, result = result_list[0], result_list[1], 
 
     result_lines = result.splitlines()
 
@@ -161,6 +173,26 @@ def test_add_python_folder_to_path_default():
         )
 
 
+def test_add_python_folder_to_path_default_new_path_value():
+    bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
+    b_update, result, new_path_value = config.add_python_folder_to_path(bashrc_text)
+
+    import_pylab_attempt = config.run_cmd_in_bash(
+        ' && '.join(
+            [
+                f"export PATH={new_path_value}",
+                'python -c "import pylab as py"',
+            ]
+        )
+    )
+
+    assert 'error' not in import_pylab_attempt.lower(), {
+        'import attempt response' : import_pylab_attempt, 
+        'b_update': b_update, 
+        'bash_string' : result, 
+    }
+
+
 def test_has_folder_python():
     assert config.has_folder_python(os.path.split(sys.executable)[0])
 
@@ -180,27 +212,12 @@ def test_revise_settings_json():
     config.revise_settings_json(b_save=False)
 
 
-def test_get_unix_path_with_drive():
-    input_win_path = 'C:\\Users\\beachgoer\\.bashrc'
-    result = config.get_unix_path(input_win_path)
-    expected = '/c/Users/beachgoer/.bashrc'
-
-    assert expected == result, f"\nexpected : {expected}\nresult : {result}"
-
-
 def test_get_unix_path_without_drive():
-    input_win_path = 'Users\\beachgoer\\.bashrc'
+    input_win_path = 'Users\\user\\.bashrc'
     result = config.get_unix_path(input_win_path)
-    expected = 'Users/beachgoer/.bashrc'
+    expected = 'Users/user/.bashrc'
 
     assert expected == result, f"\nexpected : {expected}\nresult : {result}"
-
-
-def test_run_cmd_in_bash():
-    result = config.run_cmd_in_bash('true && echo $?')
-    expected = '0\n'
-
-    assert result == expected, result
 
 
 def test_which_python_unix_path():
@@ -219,6 +236,21 @@ def test_which_python_unix_path():
     assert os.path.isfile(result_win_path), (sys.executable, result_win_path)
 
 
+def test_run_cmd_in_bash():
+    result = config.run_cmd_in_bash('true && echo $?')
+    expected = '0\n'
+
+    assert result == expected, result
+
+
+def test_get_unix_path_with_drive():
+    input_win_path = 'C:\\Users\\user\\.bashrc'
+    result = config.get_unix_path(input_win_path)
+    expected = '/c/Users/user/.bashrc'
+
+    assert expected == result, f"\nexpected : {expected}\nresult : {result}"
+
+
 def test_add_alias_line():
     input_string = '# 1 2 3'
 
@@ -226,3 +258,81 @@ def test_add_alias_line():
 
     assert input_string in result, result
     assert 'alias' in result, result
+
+
+def test_get_re_export_path():
+    expected = 'Find/This/line:Expected'
+    expected_1 = 'Find/This/line:Expected1'
+
+    not_expected = 'DontFind/This/line:NotExpected1'
+
+    r = config.get_re_export_path()
+
+    input_text = (
+        'abc\n'
+        f'export PATH={expected}\n'
+        'def\n'
+        f'export PATH={expected_1}\n'
+        'ghi\n'
+        f'export NOTPATH={not_expected}\n'
+        'jkl\n'
+    )
+
+    result = r.findall(input_text)
+
+    assert expected in result, (r, result, input_text)
+    assert expected_1 in result, (r, result, input_text)
+    assert not_expected not in result, (r, result, input_text)
+
+
+def test_get_re_export_path_sample_findall():
+    expected = '~/Anaconda3:$PATH'
+    expected_1 = '~/Anaconda3:/~/Anaconda3/Library/bin:$PATH'
+
+    r = config.get_re_export_path()
+
+    input_text = f'''export LANG=en_US.utf8
+export PATH={expected}
+. ~/Anaconda3/etc/profile.d/conda.sh
+alias log="git log --oneline --graph --all --decorate"
+
+export PATH={expected_1}
+'''
+
+    result = r.findall(input_text)
+
+    assert expected in result, (r, result, input_text)
+    assert expected_1 in result, (r, result, input_text)
+
+
+def test_get_re_export_path_sample_search():
+    expected = '~/Anaconda3:$PATH'
+    expected_1 = '~/Anaconda3:/~/Anaconda3/Library/bin:$PATH'
+
+    r = config.get_re_export_path()
+
+    input_text = f'''export LANG=en_US.utf8
+export PATH={expected}
+. ~/Anaconda3/etc/profile.d/conda.sh
+alias log="git log --oneline --graph --all --decorate"
+
+export PATH={expected_1}
+'''
+
+    result = None
+
+    result = r.search(input_text)
+
+    assert expected in result.group(0), (r, result, input_text)
+    assert expected in result.group(1), (r, result, input_text)
+
+
+def test_add_to_list_unique_at_0():
+    list_input = ['zzz']
+    add0 = 'abc'
+    add1 = 'def'
+
+    result = config.add_to_list_unique_at_0(list_input, add0, add1)
+
+    assert result[0] == add0, result
+    assert result[1] == add1, result
