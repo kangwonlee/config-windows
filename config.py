@@ -157,16 +157,16 @@ def get_win_path(unix_path):
 
     result = ''
 
-    if not path_list[0]:
+    if unix_path.startswith('/'):
         if 1 == len(path_list[1]):
-            path_list[1] = path_list[1] + ':'
+            # seems driver letter
+            path_list[1] = path_list[1] + ':\\'
             del path_list[0]
-            result = '\\'.join(path_list)
+            result = os.path.join(*path_list)
     else:
-        pass
-    
+        result = os.path.join(os.getcwd(),*path_list)
 
-        
+    return result
 
 
 def assert_conda_lib_bin_folder_host(conda_lib_bin_folder_host):
