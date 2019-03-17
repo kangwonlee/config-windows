@@ -175,7 +175,7 @@ alias log="git log --oneline --graph --all --decorate"
 
 
 def test_add_python_folder_to_path_default():
-    bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
+    bashrc_text = config.read_file(os.path.expanduser('/c/Users/travis/.bashrc'))
     result_list = config.add_python_folder_to_path(bashrc_text)
     b_update, result = result_list[0], result_list[1], 
 
@@ -204,7 +204,7 @@ def test_add_python_folder_to_path_default():
 
 
 def test_add_python_folder_to_path_default_new_path_value():
-    bashrc_text = config.read_file(os.path.expanduser('~/.bashrc'))
+    bashrc_text = config.read_file(os.path.expanduser('/c/Users/travis/.bashrc'))
     b_update, result, new_path_value = config.add_python_folder_to_path(bashrc_text)
 
     import_pylab_attempt = config.run_cmd_in_bash(
@@ -316,14 +316,14 @@ def test_get_re_export_path():
 
 
 def test_get_re_export_path_sample_findall():
-    expected = '~/Anaconda3:$PATH'
-    expected_1 = '~/Anaconda3:/~/Anaconda3/Library/bin:$PATH'
+    expected = '/c/Users/travis/Anaconda3:$PATH'
+    expected_1 = '/c/Users/travis/Anaconda3:/c/Users/travis/Anaconda3/Library/bin:$PATH'
 
     r = config.get_re_export_path()
 
     input_text = f'''export LANG=en_US.utf8
 export PATH={expected}
-. ~/Anaconda3/etc/profile.d/conda.sh
+. /c/Users/travis/Anaconda3/etc/profile.d/conda.sh
 alias log="git log --oneline --graph --all --decorate"
 
 export PATH={expected_1}
@@ -336,14 +336,14 @@ export PATH={expected_1}
 
 
 def test_get_re_export_path_sample_search():
-    expected = '~/Anaconda3:$PATH'
-    expected_1 = '~/Anaconda3:/~/Anaconda3/Library/bin:$PATH'
+    expected = '/c/Users/travis/Anaconda3:$PATH'
+    expected_1 = '/c/Users/travis/Anaconda3:/c/Users/travis/Anaconda3/Library/bin:$PATH'
 
     r = config.get_re_export_path()
 
     input_text = f'''export LANG=en_US.utf8
 export PATH={expected}
-. ~/Anaconda3/etc/profile.d/conda.sh
+. /c/Users/travis/Anaconda3/etc/profile.d/conda.sh
 alias log="git log --oneline --graph --all --decorate"
 
 export PATH={expected_1}
@@ -371,8 +371,8 @@ def test_add_to_list_unique_at_0():
 def test_condition_bashrc_txt_err01():
     problem_string = ';$PATH'
     txt = f'''export LANG=en_US.utf8
-export PATH=~/Anaconda3{problem_string}
-. ~/Anaconda3/etc/profile.d/conda.sh
+export PATH=/c/Users/travis/Anaconda3{problem_string}
+. /c/Users/travis/Anaconda3/etc/profile.d/conda.sh
 alias log="git log --oneline --graph --all --decorate"
 '''
 
