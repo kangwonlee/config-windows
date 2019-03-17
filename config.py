@@ -139,9 +139,9 @@ def condition_bashrc_txt(bashrc_txt, export_path_re=get_re_export_path()):
             folder_list = split_path_into_folders(path_value)
             for folder in folder_list:
                 assert any((
-                        os.path.exists(folder),
-                        os.path.exists(os.path.abspath(folder)),
-                        os.path.exists(os.path.expandvars(folder)),
+                        os.path.exists(get_win_path(folder)),
+                        os.path.exists(get_win_path(os.path.abspath(folder))),
+                        os.path.exists(get_win_path(os.path.expandvars(folder))),
                     )), {
                             'folder': folder, 
                             'os.path.abspath(folder)': os.path.abspath(folder),
