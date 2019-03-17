@@ -153,6 +153,9 @@ def condition_bashrc_txt(bashrc_txt, export_path_re=get_re_export_path()):
 
 
 def get_win_path(unix_path):
+
+    assert '~' not in unix_path, "Not handling in ~ in {unix_path}"
+
     path_list = unix_path.split('/')
 
     result = ''
