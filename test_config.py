@@ -377,3 +377,17 @@ alias log="git log --oneline --graph --all --decorate"
 '''
 
     result = config.condition_bashrc_txt(txt)
+
+
+def test_get_win_path_00():
+    input_path_00 = '/c/Users/travis/Anaconda3'
+    result = config.get_win_path(input_path_00)
+    assert r"c:\Users\travis\Anaconda3" == result, result
+
+
+def test_get_win_path_01():
+    folder_name = 'ex01'
+    file_name = 'ex01.py'
+    input_path = f'{folder_name}/{file_name}'
+    result = config.get_win_path(input_path)
+    assert os.path.join(os.getcwd(), folder_name, file_name) == result, result
