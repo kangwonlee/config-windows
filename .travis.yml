@@ -24,6 +24,8 @@ install :
   # install python extension for vscode
   - code --install-extension ms-python.python
   - code --list-extensions
+  # install git for Windows 2.21
+  - choco install git
 
 script :
   - $CONDA_PATH/Scripts/pytest && exit
