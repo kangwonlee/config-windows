@@ -219,7 +219,7 @@ def revise_settings_json(json_filename=get_settings_json_filename(), b_save=Fals
     json_for_bash = {
         'python.pythonPath': os.path.join(get_python_folder_from_sys(), 'python.exe'),
         'terminal.integrated.shell.windows': get_bash_path(),
-        "python.terminal.activateEnvironment": false,
+        "python.terminal.activateEnvironment": False,
     }
 
     if os.path.exists(get_settings_json_filename()):
