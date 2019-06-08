@@ -21,6 +21,7 @@ install :
   - hash -r
   - which code
   - which python
+  - which pytest
   # install python extension for vscode
   - code --install-extension ms-python.python
   - code --list-extensions
@@ -28,7 +29,7 @@ install :
   - choco install git.install
 
 script :
-  - $CONDA_PATH/Scripts/pytest && exit
+  - $CONDA_PATH/python -m pytest && exit
 
 notifications : 
   email :
