@@ -128,7 +128,7 @@ def test_get_python_folder_from_sys():
 
 def test_add_python_folder_to_path():
     input_text = ''
-    python_folder = os.path.split(sys.executable)[0]
+    python_folder = os.path.dirname(sys.executable)
     result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, conda_folder=python_folder)
     assert config.get_unix_path(python_folder) in result[1], result
 
@@ -139,7 +139,7 @@ export PATH=~/Anaconda3:$PATH
 . ~/Anaconda3/etc/profile.d/conda.sh
 alias log="git log --oneline --graph --all --decorate"
 '''
-    python_folder = os.path.split(sys.executable)[0]
+    python_folder = os.path.dirname(sys.executable)
     result = config.add_python_folder_to_path(input_text, bash_can_find_python=False, conda_folder=python_folder)
     assert config.get_unix_path(python_folder) in result[1], result
 
@@ -194,14 +194,14 @@ def test_add_python_folder_to_path_default_new_path_value():
 
 
 def test_has_folder_python():
-    assert config.has_folder_python(os.path.split(sys.executable)[0])
+    assert config.has_folder_python(os.path.dirname(sys.executable))
 
 
 def test_has_folder_python_no():
 
     pardir_of_python_folder = os.path.abspath(
             os.path.join(
-                os.path.split(sys.executable)[0], os.pardir
+                os.path.dirname(sys.executable), os.pardir
             )
         )
 
