@@ -21,7 +21,6 @@ install :
   - hash -r
   - which code
   - which python
-  - which pytest
   # install python extension for vscode
   - code --install-extension ms-python.python
   - code --list-extensions
